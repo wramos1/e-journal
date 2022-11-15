@@ -9,48 +9,81 @@ interface CheckProps {
 }
 
 const Check = ({ check, editCheck, deleteCheck, position }: CheckProps) => {
-    const [isEditing, setIsEditing] = useState<boolean>(false)
-    const [checkIn, setCheckIn] = useState<string>('')
+    //Boolean state to check if edit button is clicked
+    const [isEditing, setIsEditing] = useState<boolean>(false);
+
+    //String state to hold name of new Check In
+    const [checkIn, setCheckIn] = useState<string>('');
+
+    //Destructures name and id from Check In 
     const { name, id } = check;
 
+    //useEffect hook to check whenever edit button is clicked to put event listener on body to close edit when body is clicked
     useEffect(() => {
         if (isEditing) {
             document.body.addEventListener('click', closeEdit)
+
             return () => {
                 document.body.removeEventListener('click', closeEdit)
             }
         }
     }, [isEditing])
 
-    const formBtn = document.querySelector('#modal-root');
+    //Function to check if modal is clicked so that it does not register as a body click which would close the edit 
+    const modal = document.querySelector('#modal-root');
 
     const closeEdit = (e: MouseEvent) => {
         const target = e.target as HTMLElement;
-        if (target === formBtn || formBtn!.contains(target) || target.classList.contains('edit-btn')) {
+        if (target === modal || modal!.contains(target) || target.classList.contains('edit-btn')) {
             return;
-        } else {
+        }
+        else {
             setIsEditing(!isEditing)
         }
     };
 
+    //Callback method to update a CheckIn
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         editCheck(checkIn, position);
         setIsEditing(false)
     }
 
+    //Conditionally renders either the li or a form to update CheckIn based on whether edit is clicked
     return (
         !isEditing ?
+
             <li>
                 {name}
-                <button onClick={() => deleteCheck(id)}> X </button>
-                <button className='edit-btn' onClick={() => setIsEditing(!isEditing)}> Edit </button>
-            </li> :
+                <button
+                    onClick={() => deleteCheck(id)}
+                >
+                    X
+                </button>
+
+                <button
+                    className='edit-btn'
+                    onClick={() => setIsEditing(!isEditing)}
+                >
+                    Edit
+                </button>
+            </li>
+            :
             <div>
                 <form onSubmit={handleSubmit}>
-                    <input type="text" defaultValue={name} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCheckIn(e.currentTarget.value)} />
+                    <input
+                        type="text"
+                        defaultValue={name}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCheckIn(e.currentTarget.value)}
+                    />
                 </form>
-                <button className='edit-btn' onClick={() => setIsEditing(!isEditing)}> Edit </button>
+
+                <button
+                    className='edit-btn'
+                    onClick={() => setIsEditing(!isEditing)}
+                >
+                    Edit
+                </button>
             </div>
 
     )

@@ -5,9 +5,14 @@ import ModalForm from '../../components/modalform'
 import { CheckIn } from '../../components/modalform'
 
 const index = () => {
-    const [showForm, setShowForm] = useState<boolean>(false)
-    const [checks, setChecks] = useState<CheckIn[]>([])
 
+    //Boolean state to show form
+    const [showForm, setShowForm] = useState<boolean>(false);
+
+    //State Array to hold array of CheckIns
+    const [checks, setChecks] = useState<CheckIn[]>([]);
+
+    //Parent method that sets state array of CheckIns based on child callback method
     const sendCheckIns = (checks: CheckIn[]) => {
         setShowForm(false);
         setChecks(checks)
@@ -19,7 +24,12 @@ const index = () => {
             <button onClick={() => setShowForm(!showForm)}>
                 {showForm ? 'Close' : 'Add Check Ins'}
             </button>
-            <ModalForm show={showForm} onCloseForm={() => setShowForm(false)} onSubmitCheckIns={sendCheckIns} />
+
+            <ModalForm
+                show={showForm}
+                onCloseForm={() => setShowForm(false)} onSubmitCheckIns={sendCheckIns}
+            />
+
             {checks.length > 0 &&
                 <CheckIns checks={checks} />
             }
