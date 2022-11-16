@@ -1,21 +1,35 @@
-import React, { MouseEventHandler } from 'react'
+import React, { useState } from 'react'
 import { CheckIn } from './modalform'
 
 interface CheckInProps {
     checks: CheckIn[]
 }
 const CheckIns = ({ checks }: CheckInProps) => {
+    const [isChecked, setIsChecked] = useState<boolean>(false);
+
     const onSelectRadioButton = (e: React.MouseEvent<HTMLInputElement>) => {
-        console.log(e.currentTarget.checked)
+        if (isChecked) {
+            e.currentTarget.checked = false;
+            setIsChecked(false);
+            return;
+        }
+        setIsChecked(true);
     }
 
-    //Function to display Check Ins
+    //Function to display Check Ins (Condtional to display what type of input is needed)
     const mapToDisplayChecks = checks.length > 0 ? checks.map((check: CheckIn) => {
+        const { name, id, type } = check
         return (
-            <React.Fragment key={check.id}>
-                <label htmlFor="">{check.name}</label>
-                <input type={check.type} />
-            </React.Fragment>
+            type === 'radio' ?
+                <React.Fragment key={id}>
+                    <label htmlFor={name}>{name}</label>
+                    <input type={type} id={name} onClick={(e) => onSelectRadioButton(e)} />
+                </React.Fragment>
+                :
+                <React.Fragment key={id}>
+                    <label htmlFor={name}>{name}</label>
+                    <input type={type} id={name} maxLength={20} />
+                </React.Fragment>
         )
     }) : null;
 
