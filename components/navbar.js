@@ -3,16 +3,17 @@ import Link from 'next/link'
 
 const Navbar = () => {
     return (
-        <nav>
-            <div>
-                <h1>
+        <nav className='flex flex-row top-0 w-full px-7 py-4 items-center'>
+            <div className='w-full'>
+                <h1 className='text-2xl'>
                     <Link href="/">
                         E-Journal
                     </Link>
                 </h1>
             </div>
-            <div>
-                <ul>
+
+            <div className='w-full'>
+                <ul className='flex flex-row justify-between text-lg'>
                     <li>
                         <Link href="/journal">
                             Journal

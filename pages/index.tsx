@@ -9,7 +9,7 @@ export default function Home() {
       </Head>
 
       <div className={styles.container}>
-        Hi
+        <h1 className="">Hello</h1>
       </div>
     </>
 

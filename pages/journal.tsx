@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Journal = () => {
+
     return (
         <div>
-            <h1>
+            <h1 className='title'>
                 Journal
             </h1>
 
             <div>
-
             </div>
+
         </div>
     )
 }

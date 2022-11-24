@@ -24,7 +24,9 @@
     "**/*.ts",
     "**/*.tsx",
     "components/check.jsx",
-    "components/check.jsx"
+    "components/check.jsx",
+    "pages/lists/index.jsx",
+    "pages/lists/index.tsx"
   ],
   "exclude": [
     "node_modules"

@@ -89,13 +89,19 @@ const ModalForm = ({ show, onCloseForm, onSubmitCheckIns }: ModalProps) => {
 
 
     const form = show ? (
-        <React.Fragment>
-            <button onClick={() => onCloseForm()}>X</button>
+        <div className='bg-white w-4/5 flex flex-col h-full'>
+            <button
+                onClick={() => onCloseForm()}
+                className='absolute right-5 top-5 text-2xl border border-white px-5 py-2 rounded-lg z-10'
+            >
+                X
+            </button>
 
             <form
+                className='flex justify-evenly items-center w-full p-8 text-white border-b border-black' //Add styles to put inputs at the top in a row direction and then for the checks to mapped in a column direction
                 onSubmit={handleSubmit}
             >
-                <label htmlFor="name">
+                <label htmlFor="name" className='text-xl text-black'>
                     Name
                 </label>
                 <input
@@ -103,15 +109,17 @@ const ModalForm = ({ show, onCloseForm, onSubmitCheckIns }: ModalProps) => {
                     id='name'
                     onChange={(e) => setCheckIn(e.target.value)}
                     required
+                    className="inputs"
                 />
 
-                <label htmlFor="type">
+                <label htmlFor="type" className='text-xl text-black'>
                     Type
                 </label>
                 <select
                     name="type"
                     id="type"
                     onChange={(e) => setType(e.target.value)}
+                    className="inputs"
                 >
                     <option
                         value="radio"
@@ -132,7 +140,7 @@ const ModalForm = ({ show, onCloseForm, onSubmitCheckIns }: ModalProps) => {
             </div>
 
             <button onClick={() => sendCheckIns()}>Create Check In</button>
-        </React.Fragment>
+        </div>
     ) : null;
 
     if (typeof window !== "undefined") {

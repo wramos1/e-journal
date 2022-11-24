@@ -46,27 +46,31 @@ const Check = ({ check, editCheck, deleteCheck, position }: CheckProps) => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         editCheck(checkIn, position);
-        setIsEditing(false)
+        setIsEditing(false);
     }
 
     //Conditionally renders either the li or a form to update CheckIn based on whether edit is clicked
     return (
         !isEditing ?
 
-            <li>
+            <li className='w-full p-2 my-5 flex justify-between'>
                 {name}
-                <button
-                    onClick={() => deleteCheck(id)}
-                >
-                    X
-                </button>
 
-                <button
-                    className='edit-btn'
-                    onClick={() => setIsEditing(!isEditing)}
-                >
-                    Edit
-                </button>
+                <div className='flex justify-around w-1/5'>
+                    <button
+                        onClick={() => deleteCheck(id)}
+                    >
+                        X
+                    </button>
+
+                    <button
+                        className='edit-btn'
+                        onClick={() => setIsEditing(!isEditing)}
+                    >
+                        Edit
+                    </button>
+                </div>
+
             </li>
             :
             <div>
@@ -75,6 +79,7 @@ const Check = ({ check, editCheck, deleteCheck, position }: CheckProps) => {
                         type="text"
                         defaultValue={name}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCheckIn(e.currentTarget.value)}
+                        className='inputs'
                     />
                 </form>
 

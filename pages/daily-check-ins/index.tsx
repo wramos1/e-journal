@@ -18,16 +18,40 @@ const index = () => {
         setChecks(checks)
     }
 
+    //Opens Modal and adds class to ModalRoot
+    const openModal = () => {
+        setShowForm(!showForm)
+        if (showForm) {
+            document.querySelector('#modal-root')!.classList.remove('scale-1')
+            document.querySelector('#modal-root')!.classList.add('scale-0')
+        }
+        else {
+            document.querySelector('#modal-root')!.classList.add('scale-1')
+            document.querySelector('#modal-root')!.classList.remove('scale-0')
+        }
+    }
+
+    //Closes Modal
+    const closeModal = () => {
+        setShowForm(false);
+        document.querySelector('#modal-root')!.classList.remove('scale-1')
+        document.querySelector('#modal-root')!.classList.add('scale-0')
+    }
+
     return (
-        <div>
-            Daily Check Ins
-            <button onClick={() => setShowForm(!showForm)}>
+        <div className='h-screen relative'>
+
+            <h1 className='title'>
+                Daily Check Ins
+            </h1>
+
+            <button onClick={() => openModal()} className="right-5 absolute p-2 border-neutral-900 border border-solid rounded-lg">
                 {showForm ? 'Close' : 'Add Check Ins'}
             </button>
 
             <ModalForm
                 show={showForm}
-                onCloseForm={() => setShowForm(false)} onSubmitCheckIns={sendCheckIns}
+                onCloseForm={() => closeModal()} onSubmitCheckIns={sendCheckIns}
             />
 
             {checks.length > 0 &&

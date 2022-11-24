@@ -5,8 +5,11 @@ interface CheckInProps {
     checks: CheckIn[]
 }
 const CheckIns = ({ checks }: CheckInProps) => {
+
+    //Boolean state to see is button has been checked
     const [isChecked, setIsChecked] = useState<boolean>(false);
 
+    //Function to allow select/deselect of button clicked
     const onSelectRadioButton = (e: React.MouseEvent<HTMLInputElement>) => {
         if (isChecked) {
             e.currentTarget.checked = false;
@@ -14,6 +17,13 @@ const CheckIns = ({ checks }: CheckInProps) => {
             return;
         }
         setIsChecked(true);
+    }
+
+    //Function to receive values for inputs in Check Ins
+    //Maybe pass props back up to parent component with values inserted
+    //Add optional value prop to interface to store this value in CheckIn
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
     }
 
     //Function to display Check Ins (Condtional to display what type of input is needed)
@@ -35,7 +45,10 @@ const CheckIns = ({ checks }: CheckInProps) => {
 
     return (
         <div>
-            {mapToDisplayChecks}
+            <form onSubmit={handleSubmit}>
+                {mapToDisplayChecks}
+                <button>Submit</button>
+            </form>
         </div>
     )
 }
