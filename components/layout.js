@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
             <main>
                 {children}
             </main>
-            <div id="modal-root" className="h-screen w-full absolute left-0 top-0 backdrop-blur-sm scale-0 transition-all duration-500 flex justify-center items-center"></div>
+            <div id="modal-root" className="h-screen w-full absolute left-0 top-0 backdrop-blur-sm scale-0 transition-all duration-300 flex justify-center items-center"></div>
         </>
     )
 }

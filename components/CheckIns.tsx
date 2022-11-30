@@ -1,10 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CheckIn } from './modalform'
 
 interface CheckInProps {
     checks: CheckIn[]
 }
 const CheckIns = ({ checks }: CheckInProps) => {
+    const [date, setDate] = useState<string>();
+
+    useEffect(() => {
+        const date = new Date();
+        setDate(`${date.getMonth()}/${date.getDate()}/${date.getFullYear()}`);
+    }, [])
 
     //Boolean state to see is button has been checked
     const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -43,11 +49,21 @@ const CheckIns = ({ checks }: CheckInProps) => {
         )
     }) : null;
 
+
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                {mapToDisplayChecks}
-                <button>Submit</button>
+        <div className='m-2'>
+            <form onSubmit={handleSubmit} className="w-full p-2 border border-gray-300 flex flex-col">
+                <h1>
+                    {date}
+                </h1>
+
+                <div className='flex'>
+                    {mapToDisplayChecks}
+                </div>
+
+                <button className='button mx-auto my-0 px-6'>
+                    Submit
+                </button>
             </form>
         </div>
     )

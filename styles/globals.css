@@ -12,4 +12,12 @@
     @apply border-black border-2 rounded-md text-black
   }
 
+  .button {
+    @apply border-gray-300 border-2 rounded-lg text-black px-2 py-1 bg-gray-50 
+  }
+
+  .check {
+    @apply w-full p-2 my-5 flex justify-between border-black border-b items-center
+  }
+
 }

@@ -32,9 +32,14 @@ const ModalForm = ({ show, onCloseForm, onSubmitCheckIns }: ModalProps) => {
         //Checks if name of Check In exists by flattening dynamicProps and using some to compare name value
         if (dynamicProps.flat().some((a) => a.name === checkIn)) {
             console.log(dynamicProps.flat())
-            alert('Check In already exists')
+            alert('Check In Already Exists')
             return;
-        }
+        };
+
+        if (checkIn === '') {
+            alert('Requires Name For Check In');
+            return;
+        };
 
         //Spreads dynamicProps state in order to submit Check In into array
         setDynamicProps([...dynamicProps,
@@ -42,7 +47,7 @@ const ModalForm = ({ show, onCloseForm, onSubmitCheckIns }: ModalProps) => {
             name: checkIn,
             type: type,
             id: getId()
-        }])
+        }]);
 
         //Resets input to empty string
         document.querySelector<HTMLInputElement>('#name')!.value = '';
@@ -51,26 +56,29 @@ const ModalForm = ({ show, onCloseForm, onSubmitCheckIns }: ModalProps) => {
     //Callback method checks if there is an array and submits if there is to parent component level state
     const sendCheckIns = () => {
         if (dynamicProps) {
-            onSubmitCheckIns(dynamicProps)
-        }
-    }
+            onSubmitCheckIns(dynamicProps);
+        };
+    };
 
     //Parent method that filters CheckIn from child callback method
     const deleteCheck = (id: string) => {
-        setDynamicProps(dynamicProps.filter(check => check.id !== id))
+        setDynamicProps(dynamicProps.filter(check => check.id !== id));
     }
 
     //Parent method that edits a CheckIn from child callback method
     const handleEdit = (value: string, i: number): void => {
+        if (value === '') {
+            alert('Cannot be nameless');
+            return;
+        }
         if (dynamicProps.flat().some((a) => a.name === value)) {
             alert('Check In already exists')
             return;
         }
-        console.log(dynamicProps.flat())
         let modifiedArr = [...dynamicProps];
-        let item = { ...modifiedArr[i], name: value }
+        let item = { ...modifiedArr[i], name: value };
         modifiedArr[i] = item;
-        setDynamicProps(modifiedArr)
+        setDynamicProps(modifiedArr);
     }
 
 
@@ -92,54 +100,63 @@ const ModalForm = ({ show, onCloseForm, onSubmitCheckIns }: ModalProps) => {
         <div className='bg-white w-4/5 flex flex-col h-full'>
             <button
                 onClick={() => onCloseForm()}
-                className='absolute right-5 top-5 text-2xl border border-white px-5 py-2 rounded-lg z-10'
+                className='absolute right-5 top-5 text-2xl px-5 py-2 rounded-lg z-10 button border-black'
             >
                 X
             </button>
 
-            <form
-                className='flex justify-evenly items-center w-full p-8 text-white border-b border-black' //Add styles to put inputs at the top in a row direction and then for the checks to mapped in a column direction
-                onSubmit={handleSubmit}
-            >
-                <label htmlFor="name" className='text-xl text-black'>
-                    Name
-                </label>
-                <input
-                    type="text"
-                    id='name'
-                    onChange={(e) => setCheckIn(e.target.value)}
-                    required
-                    className="inputs"
-                />
-
-                <label htmlFor="type" className='text-xl text-black'>
-                    Type
-                </label>
-                <select
-                    name="type"
-                    id="type"
-                    onChange={(e) => setType(e.target.value)}
-                    className="inputs"
+            <div className='border-black border-b'>
+                <form
+                    className='flex justify-evenly items-center w-full p-8 text-white' //Add styles to put inputs at the top in a row direction and then for the checks to mapped in a column direction
+                    onSubmit={handleSubmit}
                 >
-                    <option
-                        value="radio"
-                    >
-                        Button
-                    </option>
+                    <label htmlFor="name" className='text-xl text-black'>
+                        Name
+                    </label>
+                    <input
+                        type="text"
+                        id='name'
+                        onChange={(e) => setCheckIn(e.target.value)}
+                        required
+                        className="inputs"
+                    />
 
-                    <option
-                        value="input"
+                    <label htmlFor="type" className='text-xl text-black'>
+                        Type
+                    </label>
+                    <select
+                        name="type"
+                        id="type"
+                        onChange={(e) => setType(e.target.value)}
+                        className="inputs"
                     >
-                        Input
-                    </option>
-                </select>
-            </form>
+                        <option
+                            value="radio"
+                        >
+                            Button
+                        </option>
+
+                        <option
+                            value="input"
+                        >
+                            Input
+                        </option>
+                    </select>
+                    <button className='button' onClick={handleSubmit}>Create Check In</button>
+                </form>
+
+            </div>
 
             <div>
                 {mapChecks}
             </div>
 
-            <button onClick={() => sendCheckIns()}>Create Check In</button>
+            <button
+                className='button mx-auto my-0 px-6'
+                onClick={() => sendCheckIns()}
+            >
+                Save
+            </button>
         </div>
     ) : null;
 

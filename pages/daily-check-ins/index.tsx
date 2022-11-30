@@ -14,12 +14,12 @@ const index = () => {
 
     //Parent method that sets state array of CheckIns based on child callback method
     const sendCheckIns = (checks: CheckIn[]) => {
-        setShowForm(false);
         setChecks(checks)
+        toggleModal();
     }
 
     //Opens Modal and adds class to ModalRoot
-    const openModal = () => {
+    const toggleModal = () => {
         setShowForm(!showForm)
         if (showForm) {
             document.querySelector('#modal-root')!.classList.remove('scale-1')
@@ -31,13 +31,6 @@ const index = () => {
         }
     }
 
-    //Closes Modal
-    const closeModal = () => {
-        setShowForm(false);
-        document.querySelector('#modal-root')!.classList.remove('scale-1')
-        document.querySelector('#modal-root')!.classList.add('scale-0')
-    }
-
     return (
         <div className='h-screen relative'>
 
@@ -45,18 +38,19 @@ const index = () => {
                 Daily Check Ins
             </h1>
 
-            <button onClick={() => openModal()} className="right-5 absolute p-2 border-neutral-900 border border-solid rounded-lg">
+            <button onClick={() => toggleModal()} className="right-5 absolute p-2 border-neutral-900 border border-solid rounded-lg">
                 {showForm ? 'Close' : 'Add Check Ins'}
             </button>
 
             <ModalForm
                 show={showForm}
-                onCloseForm={() => closeModal()} onSubmitCheckIns={sendCheckIns}
+                onCloseForm={() => toggleModal()} onSubmitCheckIns={sendCheckIns}
             />
-
-            {checks.length > 0 &&
-                <CheckIns checks={checks} />
-            }
+            <div className='py-10'>
+                {checks.length > 0 &&
+                    <CheckIns checks={checks} />
+                }
+            </div>
         </div>
     )
 }

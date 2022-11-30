@@ -16,7 +16,7 @@ const Check = ({ check, editCheck, deleteCheck, position }: CheckProps) => {
     const [checkIn, setCheckIn] = useState<string>('');
 
     //Destructures name and id from Check In 
-    const { name, id } = check;
+    const { name, id, type } = check;
 
     //useEffect hook to check whenever edit button is clicked to put event listener on body to close edit when body is clicked
     useEffect(() => {
@@ -34,7 +34,7 @@ const Check = ({ check, editCheck, deleteCheck, position }: CheckProps) => {
 
     const closeEdit = (e: MouseEvent) => {
         const target = e.target as HTMLElement;
-        if (target === modal || modal!.contains(target) || target.classList.contains('edit-btn')) {
+        if (target !== modal || target.classList.contains('edit-btn')) {
             return;
         }
         else {
@@ -53,18 +53,24 @@ const Check = ({ check, editCheck, deleteCheck, position }: CheckProps) => {
     return (
         !isEditing ?
 
-            <li className='w-full p-2 my-5 flex justify-between'>
-                {name}
+            <li className='check'>
+                <h1>
+                    {name}
+                    <small className='flex items-start align-top self-start'>
+                        {type === 'radio' ? 'Button' : 'Text Box'}
+                    </small>
+                </h1>
 
                 <div className='flex justify-around w-1/5'>
                     <button
+                        className='button text-red-600'
                         onClick={() => deleteCheck(id)}
                     >
                         X
                     </button>
 
                     <button
-                        className='edit-btn'
+                        className='button text-green-600'
                         onClick={() => setIsEditing(!isEditing)}
                     >
                         Edit
@@ -73,7 +79,7 @@ const Check = ({ check, editCheck, deleteCheck, position }: CheckProps) => {
 
             </li>
             :
-            <div>
+            <div className='check'>
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
@@ -84,10 +90,10 @@ const Check = ({ check, editCheck, deleteCheck, position }: CheckProps) => {
                 </form>
 
                 <button
-                    className='edit-btn'
+                    className='button text-red-600'
                     onClick={() => setIsEditing(!isEditing)}
                 >
-                    Edit
+                    Stop Editing
                 </button>
             </div>
 

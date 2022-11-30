@@ -2,7 +2,11 @@ import React from 'react'
 
 const index = () => {
     return (
-        <div>Lists</div>
+        <div>
+            <h1 className='title'>
+                Lists
+            </h1>
+        </div>
     )
 }
 
