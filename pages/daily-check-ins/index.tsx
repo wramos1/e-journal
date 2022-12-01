@@ -1,8 +1,7 @@
-import Link from 'next/link'
 import React, { useState } from 'react'
-import CheckIns from '../../components/CheckIns'
+import CheckIns from '../../components/DailyCheck'
 import ModalForm from '../../components/modalform'
-import { CheckIn } from '../../components/modalform'
+import CheckIn from '../../types/CheckIn';
 
 const index = () => {
 
@@ -44,7 +43,8 @@ const index = () => {
 
             <ModalForm
                 show={showForm}
-                onCloseForm={() => toggleModal()} onSubmitCheckIns={sendCheckIns}
+                onCloseForm={() => toggleModal()}
+                onSubmitCheckIns={sendCheckIns}
             />
             <div className='py-10'>
                 {checks.length > 0 &&

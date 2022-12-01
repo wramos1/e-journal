@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CheckIn } from './modalform';
+import CheckIn from '../types/CheckIn'
 
 interface CheckProps {
     check: CheckIn,

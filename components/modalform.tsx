@@ -3,12 +3,7 @@ import { useState } from 'react';
 import Check from './check';
 import { v4 as getId } from 'uuid'
 import ReactDOM from 'react-dom';
-
-export interface CheckIn {
-    name: string;
-    type: string;
-    id: string;
-}
+import CheckIn from '../types/CheckIn'
 
 interface ModalProps {
     show: boolean;
