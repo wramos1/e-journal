@@ -1,13 +1,15 @@
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
-import CheckIns from './CheckIns'
+import React, { createRef, useEffect, useState } from 'react'
+import CheckIns, { SubmitCheckInsForm } from './CheckIns'
 import CheckIn from '../types/CheckIn'
 
 interface CheckInProps {
     checks: CheckIn[]
 }
+
 const DailyCheck = ({ checks }: CheckInProps) => {
     const [date, setDate] = useState<string>();
+    const ref = createRef<SubmitCheckInsForm>();
 
     useEffect(() => {
         const date = new Date();
@@ -20,7 +22,9 @@ const DailyCheck = ({ checks }: CheckInProps) => {
     //Add optional value prop to interface to store this value in CheckIn
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        ref.current!.lockInChecks();
     }
+
 
     //Function to display Check Ins (Condtional to display what type of input is needed)
     const mapToDisplayChecks = checks.length > 0 ? checks.map((check: CheckIn, i: number) => {
@@ -28,6 +32,7 @@ const DailyCheck = ({ checks }: CheckInProps) => {
             <CheckIns
                 key={i}
                 check={check}
+                ref={ref}
             />
         )
     }) : null;

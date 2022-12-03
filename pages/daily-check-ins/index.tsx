@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
-import CheckIns from '../../components/DailyCheck'
+import DailyChecks from '../../components/DailyCheck'
 import ModalForm from '../../components/modalform'
 import CheckIn from '../../types/CheckIn';
 
 const index = () => {
-
     //Boolean state to show form
     const [showForm, setShowForm] = useState<boolean>(false);
 
@@ -48,7 +47,7 @@ const index = () => {
             />
             <div className='py-10'>
                 {checks.length > 0 &&
-                    <CheckIns checks={checks} />
+                    <DailyChecks checks={checks} />
                 }
             </div>
         </div>

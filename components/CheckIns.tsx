@@ -1,11 +1,16 @@
-import React, { useState } from 'react'
+import React, { forwardRef, useImperativeHandle, useState } from 'react'
+import { start } from 'repl';
 import CheckIn from '../types/CheckIn'
+
+export type SubmitCheckInsForm = {
+    lockInChecks: () => void;
+};
 
 interface CheckIns {
     check: CheckIn
 }
 
-const CheckIns = ({ check }: CheckIns) => {
+const CheckIns = forwardRef(({ check }: CheckIns, ref) => {
     const { name, type } = check
     //Boolean state to see is button has been checked
     const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -25,6 +30,14 @@ const CheckIns = ({ check }: CheckIns) => {
         check.value = true;
     };
 
+    useImperativeHandle(ref, () => ({
+        lockInChecks,
+    }));
+
+    const lockInChecks = () => {
+        alert('Working')
+    }
+
     return (type === 'radio' ?
         (
             <div>
@@ -40,6 +53,6 @@ const CheckIns = ({ check }: CheckIns) => {
                 <input value={value} id={name} type='text' onChange={(e) => setValue(e.target.value)} />
             </div>
         ))
-}
+})
 
 export default CheckIns
